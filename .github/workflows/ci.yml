@@ -1,0 +1,10 @@
+on: push
+
+name: Continuous integration
+
+jobs:
+  library:
+    runs-on: macos-latest
+
+    steps:
+      - run: find "/Applications/" -path '*/Xcode*' -name 'clang'
