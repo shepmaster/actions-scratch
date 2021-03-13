@@ -4,7 +4,9 @@ name: Continuous integration
 
 jobs:
   library:
-    runs-on: macos-latest
-
+    environment: ci
     steps:
-      - run: find "/Applications/" -path '*/Xcode*' -name 'clang'
+      - run: >|
+        echo ${{ secrets.REPEATED_SECRET }} | wc
+        echo ${{ secrets.SECRET_FROM_ENVIRONMENT }} | wc
+        echo ${{ secrets.SECRET_FROM_REPO }} | wc
