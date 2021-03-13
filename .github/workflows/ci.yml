@@ -7,7 +7,6 @@ jobs:
     runs-on: "ubuntu-20.04"
     environment: ci
     steps:
-      - run: |-
-          echo ${{ secrets.REPEATED_SECRET }} | wc;
-          echo ${{ secrets.SECRET_FROM_ENVIRONMENT }} | wc;
-          echo ${{ secrets.SECRET_FROM_REPO }} | wc;
+      - run: echo ${{ secrets.REPEATED_SECRET }} | wc
+      - run: echo ${{ secrets.SECRET_FROM_ENVIRONMENT }} | wc
+      - run: echo ${{ secrets.SECRET_FROM_REPO }} | wc
