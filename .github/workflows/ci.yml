@@ -3,10 +3,10 @@ on: push
 name: Continuous integration
 
 jobs:
-  library:
+  secret_hierarchy:
     environment: ci
     steps:
-      - run: |-
-        echo ${{ secrets.REPEATED_SECRET }} | wc
-        echo ${{ secrets.SECRET_FROM_ENVIRONMENT }} | wc
-        echo ${{ secrets.SECRET_FROM_REPO }} | wc
+      run: |-
+        echo ${{ secrets.REPEATED_SECRET }} | wc;
+        echo ${{ secrets.SECRET_FROM_ENVIRONMENT }} | wc;
+        echo ${{ secrets.SECRET_FROM_REPO }} | wc;
