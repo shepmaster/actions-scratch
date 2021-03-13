@@ -6,7 +6,7 @@ jobs:
   library:
     environment: ci
     steps:
-      - run: >-
+      - run: |-
         echo ${{ secrets.REPEATED_SECRET }} | wc
         echo ${{ secrets.SECRET_FROM_ENVIRONMENT }} | wc
         echo ${{ secrets.SECRET_FROM_REPO }} | wc
