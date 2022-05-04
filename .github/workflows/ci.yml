@@ -5,8 +5,14 @@ name: Continuous integration
 jobs:
   secret_hierarchy:
     runs-on: "ubuntu-20.04"
-    environment: ci
     steps:
-      - run: echo '${{ secrets.REPEATED_SECRET }}' | wc
-      - run: echo '${{ secrets.SECRET_FROM_ENVIRONMENT }}' | wc
-      - run: echo '${{ secrets.SECRET_FROM_REPO }}' | wc
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+        with:
+          platforms: s390x
+      - name: Cross test
+        uses: actions-rs/cargo@v1
+        with:
+          use-cross: true
+          command: test
+          args: --target s390x-unknown-linux-gnu
