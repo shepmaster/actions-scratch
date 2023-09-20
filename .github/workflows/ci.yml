@@ -3,18 +3,19 @@ on: [push, pull_request]
 name: Continuous integration
 
 jobs:
-  secret_hierarchy:
+  docker_cache:
     runs-on: "ubuntu-20.04"
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
         with:
-          platforms: s390x
-      - name: Cross test
-        uses: actions-rs/cargo@v1
-        with:
-          use-cross: true
-          command: test
-          args: --target s390x-unknown-linux-gnu
+          context: .
+          tags: "run:latest"
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
