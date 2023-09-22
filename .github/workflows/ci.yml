@@ -5,6 +5,9 @@ name: Continuous integration
 jobs:
   docker_cache:
     runs-on: "ubuntu-20.04"
+    strategy:
+      matrix:
+        name: [a, b, c]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -17,5 +20,7 @@ jobs:
         with:
           context: .
           tags: "run:latest"
+          build-args: |-
+            name=${{matrix.name}}
           cache-from: type=gha
           cache-to: type=gha,mode=max

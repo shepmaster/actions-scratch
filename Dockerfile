@@ -2,8 +2,10 @@
 
 FROM alpine:latest as base
 
+ARG name=undefined
+
 COPY apt /apt
-RUN echo 'APT update' && sleep '5'
+RUN echo 'APT update' ${name} && sleep '5'
 
 FROM base as step-1
 
