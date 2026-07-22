@@ -1,20 +1,33 @@
-on: [push, pull_request]
-
 name: Continuous integration
 
+on:
+  push:
+  pull_request_target:
+    branches:
+    - main
+
 jobs:
-  secret_hierarchy:
-    runs-on: "ubuntu-20.04"
+  anyone:
+    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-        with:
-          platforms: s390x
-      - name: Cross test
-        uses: actions-rs/cargo@v1
-        with:
-          use-cross: true
-          command: test
-          args: --target s390x-unknown-linux-gnu
+        uses: actions/checkout@v7
+
+      - name: Run simple things
+        run: echo 'I am safe'
+
+  safe-secret:
+    runs-on: ubuntu-latest
+
+    environment: ci
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Run scary things
+        run: echo "${{ secrets.REPEATED_SECRET }}"
+
+      - name: Run scary things
+        run: echo "${{ secrets.REPEATED_SECRET }}" | md5sum
