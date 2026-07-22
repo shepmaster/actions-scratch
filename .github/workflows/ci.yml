@@ -1,33 +1,24 @@
-name: Continuous integration
+name: Continuous Integration
 
 on:
   push:
-  pull_request_target:
-    branches:
-    - main
 
 jobs:
-  anyone:
+  step-on-toes:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v7
+      - uses: actions/checkout@v7
 
-      - name: Run simple things
-        run: echo 'I am safe'
+      - parallel:
+        - uses: ./.github/actions/neato
+          with:
+            tags: repro:alpha
 
-  safe-secret:
-    runs-on: ubuntu-latest
+        - uses: ./.github/actions/neato
+          with:
+            tags: repro:beta
 
-    environment: ci
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v7
-
-      - name: Run scary things
-        run: echo "${{ secrets.REPEATED_SECRET }}"
-
-      - name: Run scary things
-        run: echo "${{ secrets.REPEATED_SECRET }}" | md5sum
+        - uses: ./.github/actions/neato
+          with:
+            tags: repro:gamma
